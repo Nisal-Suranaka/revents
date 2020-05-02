@@ -55,15 +55,21 @@ const eventsFromDashBoard = [
 ]
 
 class EventDashboard extends Component {
+    state = {
+        events: eventsFromDashBoard,
+        isOpen: false
+    }
   render() {
+      //we have to use the this key word when we are accessing properties inside the class
+      const {events, isOpen} = this.state;
     return (
       <Grid>
         <Grid.Column width={10}>
-          <EventList events={eventsFromDashBoard}/>
+          <EventList events={events}/>
         </Grid.Column>
         <Grid.Column width={6}>
             <Button positive content='Create Event' />
-          <EventForm />
+            {isOpen && <EventForm />}
         </Grid.Column>
       </Grid>
     );
