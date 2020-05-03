@@ -5,7 +5,7 @@ import EventListAttendee from "./EventListAttendee";
 class EventListItem extends Component {
   render() {
     // binding event (event is the callback function of EventList.jsx) with this.props: 
-    const {event} = this.props;
+    const {event, selectEvent} = this.props;
     return (
       <Segment.Group>
         <Segment>
@@ -38,7 +38,8 @@ class EventListItem extends Component {
         </Segment>
         <Segment clearing>
             <span>{event.description}</span>
-          <Button as='a' color='teal' floated='right' content='View' />
+            {/*wrapping the selectEvent prop with an array function to avoid being triggered as soon as the component loads */}
+          <Button onClick={() => selectEvent(event)} as='a' color='teal' floated='right' content='View' />
         </Segment>
       </Segment.Group>
     );

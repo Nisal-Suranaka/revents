@@ -59,12 +59,26 @@ class EventDashboard extends Component {
   state = {
     events: eventsFromDashBoard,
     isOpen: false,
+    selectedEvent: null,
   };
 
-  handleIsOpenToggle = () => {
-    this.setState(({ isOpen }) => ({
-      isOpen: !isOpen,
-    }));
+  // handleIsOpenToggle = () => {
+  //   this.setState(({ isOpen }) => ({
+  //     isOpen: !isOpen,
+  //   }));
+  // };
+
+  handleCreateOpenForm = () => {
+    this.setState({
+      isOpen: true,
+      selectedEvent: null,
+    });
+  };
+
+  handleFormCancel = () => {
+    this.setState({
+      isOpen: false,
+    });
   };
 
   handleCreateEvent = (newEvent) => {
@@ -75,31 +89,40 @@ class EventDashboard extends Component {
       //and spred them out and add a new array(newEvent)
       events: [...events, newEvent],
       //hide the form after creating the event
-      isOpen: false
+      isOpen: false,
     }));
+  };
+
+  handleSelectEvent = (event) => {
+    this.setState({
+      selectedEvent: event,
+      isOpen: true,
+    });
   };
 
   render() {
     //we have to use the this key word when we are accessing properties inside the class
-    const { events, isOpen } = this.state;
+    const { events, isOpen, selectedEvent } = this.state;
     return (
       <Fragment>
         <Grid>
           <Grid.Column width={10}>
-            <EventList events={events} />
+            <EventList events={events} selectEvent={this.handleSelectEvent} />
           </Grid.Column>
           <Grid.Column width={6}>
             {/* don't call the function like this this.handleFormOpen() if so,
           as soon as the Component loads function will trigger */}
             <Button
-              onClick={this.handleIsOpenToggle}
+              onClick={this.handleCreateOpenForm}
               positive
               content='Create Event'
             />
+            {/* showing the form conditionally */}
             {isOpen && (
               <EventForm
+                selectedEvent={selectedEvent}
                 createEvent={this.handleCreateEvent}
-                cancelFormOpen={this.handleIsOpenToggle}
+                cancelFormOpen={this.handleFormCancel}
               />
             )}
           </Grid.Column>
