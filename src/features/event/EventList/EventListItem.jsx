@@ -14,9 +14,9 @@ class EventListItem extends Component {
               {/* can use props like this also: {this.props.event.hostPhotoURL} */}
               <Item.Image size='tiny' circular src={event.hostPhotoURL} />
               <Item.Content>
-                <Item.Header as='a'>{event.title}</Item.Header>
+                <Item.Header>{event.title}</Item.Header>
                 <Item.Description>
-                  Hosted by <a>{event.hostedBy}</a>
+                  Hosted by {event.hostedBy}
                 </Item.Description>
               </Item.Content>
             </Item>
@@ -30,7 +30,8 @@ class EventListItem extends Component {
         </Segment>
         <Segment secondary>
           <List horizontal>
-              {event.attendees.map(attendee => (
+            {/* //if event.attendees exist  then execute the map function*/}
+              {event.attendees && event.attendees.map(attendee => (
                 <EventListAttendee key={attendee.id} attendee={attendee}/>
               ))}
               </List>
