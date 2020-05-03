@@ -93,12 +93,26 @@ class EventDashboard extends Component {
     }));
   };
 
-  handleSelectEvent = (event) => {
+  handleSelectEvent = event => {
     this.setState({
       selectedEvent: event,
       isOpen: true,
     });
   };
+
+  handleUpdateEvent = (updatedEvent) => {
+    this.setState(({events}) => ({
+      events: events.map(event=> {
+        if (event.id === updatedEvent.id) {
+          return {...updatedEvent}
+        } else {
+          return event
+        }
+      }),
+      isOpen: false,
+      selectedEvent: null
+    }))
+  }
 
   render() {
     //we have to use the this key word when we are accessing properties inside the class
@@ -120,6 +134,10 @@ class EventDashboard extends Component {
             {/* showing the form conditionally */}
             {isOpen && (
               <EventForm
+                //if there is a selected event then will use for 
+                // the key is the selected event to I.D
+                key={selectedEvent ? selectedEvent.id : 0}
+                updateEvent={this.handleUpdateEvent}
                 selectedEvent={selectedEvent}
                 createEvent={this.handleCreateEvent}
                 cancelFormOpen={this.handleFormCancel}
