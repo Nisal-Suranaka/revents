@@ -10,6 +10,16 @@ class EventForm extends Component {
     hostedBy: ''
   };
 
+  componentDidMount() {
+    if (this.props.selectedEvent !== null){
+      //if selectedEvent not null 
+      // mounting the slected event to the state (title,date....)
+      this.setState({
+        ...this.props.selectedEvent
+      })
+    }
+  }
+
   handleFormSubmit = evt => {
     evt.preventDefault();
     //this.state contains all our fileds (title,date...)
